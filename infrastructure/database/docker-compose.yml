@@ -1,0 +1,22 @@
+services:
+  db:
+    container_name: "matcha_database"
+    image: postgres:18-alpine
+    env_file: ".env"
+    networks:
+      - "matcha_network"
+    restart: always
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db_data:/var/lib/postgresql/data
+      - ./scripts:/docker-entrypoint-initdb.d
+
+volumes:
+  db_data:
+
+networks:
+  matcha_network:
+    name: matcha_network
+    driver: bridge
