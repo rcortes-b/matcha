@@ -6,5 +6,5 @@ public interface AuthService {
     void handleRegister(CredentialsDTO credentialsDTO);
     void handleLogin(CredentialsDTO credentialsDTO);
     void handleLogout();
-
+    void handleCookieRefresh();
 }

@@ -33,7 +33,6 @@ public class SecurityConfig {
 
         ProviderManager providerManager = new ProviderManager(authenticationProvider);
         providerManager.setEraseCredentialsAfterAuthentication(true);
-
         return providerManager;
     }
 
@@ -45,6 +44,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
                 )
+
+
+
                 .build();
     }
 }

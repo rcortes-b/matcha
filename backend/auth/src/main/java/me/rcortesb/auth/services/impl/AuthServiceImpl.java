@@ -75,6 +75,11 @@ public class AuthServiceImpl implements AuthService {
         addCookieToResponse(cookieRefresh);
     }
 
+    @Override
+    public void handleCookieRefresh() {
+
+    }
+
     private void addCookieToResponse(Cookie cookie) {
         ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attrs == null)

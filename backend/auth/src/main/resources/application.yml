@@ -1,5 +1,12 @@
 server:
   port: 8081
+
+spring:
+  cache:
+    type: redis
+    host: localhost
+    port: 6380
+
 application:
   security:
     jwt:
