@@ -3,7 +3,6 @@ package me.rcortesb.auth.services.impl;
 import me.rcortesb.auth.domain.entity.UserSecurity;
 import me.rcortesb.auth.repository.UserSecurityRepository;
 import me.rcortesb.auth.services.VerificationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -49,7 +48,7 @@ public class VerificationServiceImpl implements VerificationService {
         message.setText("Your verification code is: " + verificationCode);
         mailSender.send(message);
         final String key = "verification-code:" + email;
-        redisTemplate.opsForValue().set(key, verificationCode, Duration.ofMinutes(1));
+        redisTemplate.opsForValue().set(key, verificationCode, Duration.ofMinutes(15));
     }
 
     @Override

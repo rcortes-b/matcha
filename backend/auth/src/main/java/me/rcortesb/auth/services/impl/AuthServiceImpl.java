@@ -1,6 +1,7 @@
 package me.rcortesb.auth.services.impl;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import me.rcortesb.auth.domain.common.CookieProperties;
 import me.rcortesb.auth.domain.common.ERole;
@@ -57,8 +58,11 @@ public class AuthServiceImpl implements AuthService {
         Authentication authRequest = new UsernamePasswordAuthenticationToken(credentialsDTO.email(),
                                                                             credentialsDTO.password());
         Authentication authentication = authenticationManager.authenticate(authRequest);
-        final String token = tokenService.generateToken(authentication, false);
-        final String refreshToken = tokenService.generateToken(authentication, true);
+        final UserSecurity userSecurity = (UserSecurity) authentication.getPrincipal();
+        final String subject = userSecurity.getId().toString();
+        final String token = tokenService.generateToken(subject, false);
+        final String refreshToken = tokenService.generateToken(subject, true);
+        System.out.println("\nToken: " + token + "\nRefresh Token: " + refreshToken + "\n");
         final Cookie cookie = cookieProperties.createCookie(token, false);
         final Cookie cookieRefresh = cookieProperties.createCookie(refreshToken, true);
         addCookieToResponse(cookie);
@@ -76,8 +80,13 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void handleCookieRefresh() {
-
+    public void handleCookieRefresh(HttpServletRequest request) {
+        final String subject = tokenService.getSubjectFromRefreshCookie(request);
+        if (subject == null)
+            throw new RuntimeException("Cookie Refresh not found");
+        final String token = tokenService.generateToken(subject, false);
+        final Cookie cookie = cookieProperties.createCookie(token, false);
+        addCookieToResponse(cookie);
     }
 
     private void addCookieToResponse(Cookie cookie) {

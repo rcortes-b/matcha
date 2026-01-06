@@ -1,7 +1,8 @@
 package me.rcortesb.auth.services;
 
-import org.springframework.security.core.Authentication;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface TokenService {
-    String generateToken(Authentication authentication, boolean isRefresh);
+    String generateToken(String subject, boolean isRefresh);
+    String getSubjectFromRefreshCookie(HttpServletRequest request);
 }

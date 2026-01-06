@@ -5,7 +5,6 @@ import jakarta.validation.Valid;
 import me.rcortesb.auth.domain.dto.CredentialsDTO;
 import me.rcortesb.auth.services.AuthService;
 import me.rcortesb.auth.services.VerificationService;
-import me.rcortesb.auth.services.impl.VerificationServiceImpl;
 import org.jboss.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,9 +64,9 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/auth/cookie-refresh")
-    public ResponseEntity<Void> refreshCookie() {
-        authService.handleCookieRefresh();
+    @PostMapping("/cookie-refresh")
+    public ResponseEntity<Void> refreshCookie(HttpServletRequest request) {
+        authService.handleCookieRefresh(request);
         return ResponseEntity.ok().build();
     }
 }
