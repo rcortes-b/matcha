@@ -3,6 +3,7 @@ package me.rcortesb.auth.services.impl;
 import me.rcortesb.auth.domain.entity.UserSecurity;
 import me.rcortesb.auth.repository.UserSecurityRepository;
 import me.rcortesb.auth.services.VerificationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -40,13 +41,15 @@ public class VerificationServiceImpl implements VerificationService {
 
     @Override
     public void sendEmail(String email, String verificationCode) {
+        final String fromEmail = "raulcortes.dev@gmail.com";
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromEmail);
         message.setTo(email);
         message.setSubject("Email Verification Code");
         message.setText("Your verification code is: " + verificationCode);
         mailSender.send(message);
         final String key = "verification-code:" + email;
-        redisTemplate.opsForValue().set(key, verificationCode, Duration.ofMinutes(15));
+        redisTemplate.opsForValue().set(key, verificationCode, Duration.ofMinutes(1));
     }
 
     @Override
@@ -55,8 +58,10 @@ public class VerificationServiceImpl implements VerificationService {
         String storedCode = redisTemplate.opsForValue().get(key);
         if (storedCode == null) {
             //throw CodeExpired
+            throw new RuntimeException("Verification code not found");
         } else if (!storedCode.equals(code)) {
             //throw InvalidCode
+            throw new RuntimeException("Verification code does not match");
         }
         UserSecurity user =  userSecurityRepository.findByEmail(email);
         if (user == null)

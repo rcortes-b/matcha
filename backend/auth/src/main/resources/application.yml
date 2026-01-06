@@ -4,8 +4,10 @@ server:
 spring:
   cache:
     type: redis
-    host: localhost
-    port: 6380
+  data:
+    redis:
+      host: localhost
+      port: 6380
 
 application:
   security:

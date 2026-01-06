@@ -2,6 +2,7 @@ package me.rcortesb.auth.controller;
 
 import jakarta.validation.Valid;
 import me.rcortesb.auth.domain.dto.EmailVerificationDTO;
+import me.rcortesb.auth.domain.dto.GenerateCodeDTO;
 import me.rcortesb.auth.services.VerificationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,9 @@ public class VerificationController {
     }
 
     @PostMapping("/generate-code")
-    public ResponseEntity<Void> generateCode(@RequestParam String email) {
+    public ResponseEntity<Void> generateCode(@RequestBody @Valid GenerateCodeDTO generateCodeDTO) {
         final String code = verificationService.generateVerificationCode();
-        verificationService.sendEmail(email, code);
+        verificationService.sendEmail(generateCodeDTO.email(), code);
         return ResponseEntity.ok().build();
     }
 

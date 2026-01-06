@@ -5,6 +5,8 @@ echo "Cleaning docker environment..."
 # Containers
 docker stop matcha_database
 docker rm matcha_database
+docker stop redis_cache
+docker rm redis_cache
 
 #Volumes
 docker volume rm db_data
