@@ -1,6 +1,9 @@
 package me.rcortesb.auth.services.impl;
 
 import me.rcortesb.auth.domain.entity.UserSecurity;
+import me.rcortesb.auth.exceptions.UserNotFound;
+import me.rcortesb.auth.exceptions.verification.InvalidVerificationCode;
+import me.rcortesb.auth.exceptions.verification.VerificationCodeExpired;
 import me.rcortesb.auth.repository.UserSecurityRepository;
 import me.rcortesb.auth.services.VerificationService;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -54,22 +57,21 @@ public class VerificationServiceImpl implements VerificationService {
     @Override
     public void verifyCode(String email, String code) {
         final String key = "verification-code:" + email;
-        String storedCode = redisTemplate.opsForValue().get(key);
+        final String storedCode = redisTemplate.opsForValue().get(key);
         if (storedCode == null) {
-            //throw CodeExpired
-            throw new RuntimeException("Verification code not found");
+            throw new VerificationCodeExpired("Verification code not found. Probably expired.");
         } else if (!storedCode.equals(code)) {
-            //throw InvalidCode
-            throw new RuntimeException("Verification code does not match");
+            throw new InvalidVerificationCode("Verification code don't match");
         }
+        redisTemplate.delete(key);
+    }
+
+    @Override
+    public void verifyUser(String email) {
         UserSecurity user =  userSecurityRepository.findByEmail(email);
         if (user == null)
-            throw new RuntimeException("User not found");
+            throw new UserNotFound("User with email " + email + " does not exist");
         user.setVerified(true);
-        if (!email.equals(user.getEmail())) {
-            user.setEmail(email); // In case it's a change-email
-        }
         userSecurityRepository.save(user);
-        redisTemplate.delete(key);
     }
 }

@@ -8,6 +8,7 @@ import me.rcortesb.auth.domain.common.ERole;
 import me.rcortesb.auth.domain.dto.CredentialsDTO;
 import me.rcortesb.auth.domain.entity.Role;
 import me.rcortesb.auth.domain.entity.UserSecurity;
+import me.rcortesb.auth.exceptions.verification.CookieNotFound;
 import me.rcortesb.auth.repository.RoleRepository;
 import me.rcortesb.auth.repository.UserSecurityRepository;
 import me.rcortesb.auth.services.AuthService;
@@ -83,7 +84,7 @@ public class AuthServiceImpl implements AuthService {
     public void handleCookieRefresh(HttpServletRequest request) {
         final String subject = tokenService.getSubjectFromRefreshCookie(request);
         if (subject == null)
-            throw new RuntimeException("Cookie Refresh not found");
+            throw new CookieNotFound("Refresh cookie not found");
         final String token = tokenService.generateToken(subject, false);
         final Cookie cookie = cookieProperties.createCookie(token, false);
         addCookieToResponse(cookie);

@@ -1,6 +1,7 @@
 package me.rcortesb.auth.services.impl;
 
 import me.rcortesb.auth.domain.entity.UserSecurity;
+import me.rcortesb.auth.exceptions.UserNotFound;
 import me.rcortesb.auth.repository.UserSecurityRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserSecurity user = userSecurityRepository.findByEmail(email);
         if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+            throw new UserNotFound("User with email " + email + " does not exist");
         }
         return user;
     }
