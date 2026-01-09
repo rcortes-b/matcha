@@ -55,14 +55,15 @@ public class TokenServiceImpl implements TokenService {
                 .filter(cookie -> cookie.getName().equals(cookieProperties.getNameRefresh()))
                 .map(Cookie::getValue)
                 .findFirst();
-        if (token.isEmpty()) {
+        if (token.isEmpty())
             return null;
-        }
         return getSubjectFromJwt(token.get());
     }
 
     private String getSubjectFromJwt(String token) {
         Jwt jwt = jwtDecoder.decode(token);
+        if (jwt == null)
+            return null;
         return jwt.getSubject();
     }
 

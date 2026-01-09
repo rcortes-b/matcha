@@ -9,6 +9,8 @@ spring:
       host: localhost
       port: 6380
 
+
+
 application:
   security:
     jwt:

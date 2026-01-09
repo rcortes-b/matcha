@@ -8,7 +8,8 @@ import me.rcortesb.auth.domain.common.ERole;
 import me.rcortesb.auth.domain.dto.CredentialsDTO;
 import me.rcortesb.auth.domain.entity.Role;
 import me.rcortesb.auth.domain.entity.UserSecurity;
-import me.rcortesb.auth.exceptions.verification.CookieNotFound;
+import me.rcortesb.auth.exceptions.UserExistsException;
+import me.rcortesb.auth.exceptions.verification.CookieNotFoundException;
 import me.rcortesb.auth.repository.RoleRepository;
 import me.rcortesb.auth.repository.UserSecurityRepository;
 import me.rcortesb.auth.services.AuthService;
@@ -44,7 +45,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void handleRegister(CredentialsDTO credentialsDTO) {
-        UserSecurity userSecurity = new UserSecurity(credentialsDTO.email(), credentialsDTO.password());
+        UserSecurity userSecurity = userSecurityRepository.findByEmail(credentialsDTO.email());
+        if (userSecurity != null) {
+            throw new UserExistsException("User already exists");
+        }
+        userSecurity = new UserSecurity(credentialsDTO.email(), credentialsDTO.password());
         Role role = roleRepository.findByRole(ERole.USER);
         if (role == null) {
             throw new RuntimeException("I fucked up configuring the User - Role relation :)");
@@ -84,7 +89,7 @@ public class AuthServiceImpl implements AuthService {
     public void handleCookieRefresh(HttpServletRequest request) {
         final String subject = tokenService.getSubjectFromRefreshCookie(request);
         if (subject == null)
-            throw new CookieNotFound("Refresh cookie not found");
+            throw new CookieNotFoundException("Refresh cookie not found");
         final String token = tokenService.generateToken(subject, false);
         final Cookie cookie = cookieProperties.createCookie(token, false);
         addCookieToResponse(cookie);
