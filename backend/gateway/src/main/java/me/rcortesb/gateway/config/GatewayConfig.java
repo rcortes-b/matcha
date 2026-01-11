@@ -1,5 +1,7 @@
 package me.rcortesb.gateway.config;
 
+import me.rcortesb.gateway.filters.AuthFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -15,8 +17,10 @@ import reactor.core.publisher.Mono;
 
 @Configuration
 public class GatewayConfig {
+
     @Bean
-    public RouteLocator routes(RouteLocatorBuilder builder, RedisRateLimiter redisRateLimiter, KeyResolver keyResolver) {
+    public RouteLocator routes(RouteLocatorBuilder builder, RedisRateLimiter redisRateLimiter,
+                                KeyResolver keyResolver, AuthFilter authFilter) {
         return builder.routes()
                 .route(p -> p
                         .path("/api/auth/**")
@@ -39,6 +43,7 @@ public class GatewayConfig {
                                 .requestRateLimiter(config -> config
                                         .setRateLimiter(redisRateLimiter)
                                         .setKeyResolver(keyResolver))
+                                .filter(authFilter)
                         )
                         .uri("http://httpbin.org:80"))
                 .build();

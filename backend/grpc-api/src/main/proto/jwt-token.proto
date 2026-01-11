@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "me.rcortesb.grpc";
+option java_outer_classname = "JwtTokenServiceProto";
+
+service JwtTokenService {
+  rpc getJwtToken (JwtTokenRequest) returns (JwtTokenResponse);
+}
+
+message JwtTokenRequest {
+  string token = 1;
+}
+
+message JwtTokenResponse {
+  string userId = 1;
+}

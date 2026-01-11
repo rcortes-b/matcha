@@ -1,6 +1,18 @@
 server:
   port: 8081
 
+grpc:
+  server:
+    port: 9094
+    #address: 0.0.0.0
+    security:
+      enabled: false
+
+logging:
+  level:
+    io.grpc: DEBUG
+    io.grpc.netty.shaded.io.netty: DEBUG
+
 spring:
   cache:
     type: redis
@@ -8,8 +20,6 @@ spring:
     redis:
       host: localhost
       port: 6380
-
-
 
 application:
   security:

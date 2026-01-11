@@ -7,18 +7,65 @@ spring:
     redis:
       host: localhost
       port: 6380
+  cloud:
+    gateway:
+      server:
+        webflux:
+          httpclient:
+            connect-timeout: 5000
+            response-timeout: 5s
 
 server:
   port: 9090
 
+grpc:
+  client:
+    jwt-token-service:
+      address: "static://[::1]:9094"
+      negotiationType: plaintext
+
+security:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+  cookie:
+    name: ${COOKIE_NAME}
+
+logging:
+  level:
+    io.github.resilience4j.circuitbreaker: DEBUG
+
+
+# Circuit closed -> Trust the calls, everything is supposed to be working
+# Circuit opened -> Don't trust the calls, every call fails
+# Circuit half-open -> Let's make 'x' calls, and depending on whether they succeed or fail, open or close the circuit
 resilience4j:
+  retry:
+    instances:
+      defaultServiceCB:
+        max-attempts: 2 # Maximum number of times a call is retried if fails
+        waitDuration: 200ms # Time waited between calls before retrying
+  timelimiter:
+    instances:
+      authServiceCB:
+        timeoutDuration: 5s # Maximum time allowed for the call to complete
+        cancelRunningFuture: true # Call is canceled if it couldn't complete in the timeoutDuration
+      defaultServiceCB:
+        timeoutDuration: 5s
+        cancelRunningFuture: true
   circuitbreaker:
     instances:
       authServiceCB:
-        failureRateThreshold: 50
-        slidingWindowSize: 10
-        waitDurationInOpenState: 10s
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10 # Number of calls stored (last calls) by resilience4j
+        minimumNumberOfCalls: 5 # Before this threshold, failure rate is not calculated so circuit cannot be opened
+                                # Failure rate is not calculated but calls count from the first one
+        failureRateThreshold: 50 # nº of failures / total calls >= failureRate. This is the % os fails to open the circuit+
+        waitDurationInOpenState: 10s # Total time the circuit is kept in open state after being opened
+        permittedNumberOfCallsInHalfOpenState: 2 # Number of calls to decide if the circuit transitions to open or closed
       defaultServiceCB:
-        failureRateThreshold: 40
+        slidingWindowType: COUNT_BASED
         slidingWindowSize: 15
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 40
         waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 2
