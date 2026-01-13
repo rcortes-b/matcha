@@ -1,5 +1,33 @@
+services:
+  matcha-auth-service-dev:
+    container_name: matcha-auth-service-dev
+    build:
+      context: ..
+      dockerfile: infrastructure/services/auth-service/Dockerfile
+    networks:
+      - "matcha-network-dev"
+    restart: always
+    ports:
+      - "8081:8081"
+      - "9091:9091"
+    env_file:
+      - "../backend/auth/.env"
 
+  matcha-gateway-service-dev:
+    container_name: matcha-gateway-service-dev
+    build:
+      context: ..
+      dockerfile: infrastructure/services/gateway-service/Dockerfile
+    networks:
+      - "matcha-network-dev"
+    restart: always
+    ports:
+      - "9090:9090"
+    depends_on:
+      - matcha-auth-service-dev
+    env_file:
+      - "../backend/gateway/.env"
 
 networks:
-  matcha_network:
+  matcha-network-dev:
     external: true

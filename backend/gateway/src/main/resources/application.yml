@@ -5,8 +5,8 @@ spring:
     web-application-type: reactive
   data:
     redis:
-      host: localhost
-      port: 6380
+      host: matcha-redis-dev
+      port: 6379
   cloud:
     gateway:
       server:
@@ -21,12 +21,10 @@ server:
 grpc:
   client:
     jwt-token-service:
-      address: "static://[::1]:9094"
+      address: "static://matcha-auth-service-dev:9091"
       negotiationType: plaintext
 
 security:
-  jwt:
-    secret-key: ${JWT_SECRET_KEY}
   cookie:
     name: ${COOKIE_NAME}
 

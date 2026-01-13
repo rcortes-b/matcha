@@ -1,31 +1,31 @@
 services:
-  db:
-    container_name: "matcha_database"
+  matcha-postgres-dev:
+    container_name: "matcha-postgres-dev"
     image: postgres:18-alpine
     env_file: ".env"
     networks:
-      - "matcha_network"
+      - "matcha-network-dev"
     restart: always
     ports:
       - "5433:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
-      - ./db_data:/var/lib/postgresql/data
+      - matcha-db-data-dev:/var/lib/postgresql/data
       - ./scripts:/docker-entrypoint-initdb.d
-  redis-cache:
-    container_name: "redis_cache"
+  matcha-redis-dev:
+    container_name: "matcha-redis-dev"
     image: redis:8.4.0-alpine
     env_file: ".env"
     networks:
-      - "matcha_network"
+      - "matcha-network-dev"
     restart: always
     ports:
       - "6380:6379"
 
 volumes:
-  db_data:
+  matcha-db-data-dev:
+    name: matcha-db-data-dev
 
 networks:
-  matcha_network:
-    name: matcha_network
+  matcha-network-dev:
+    name: matcha-network-dev
     driver: bridge

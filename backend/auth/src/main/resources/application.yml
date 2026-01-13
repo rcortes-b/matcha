@@ -3,8 +3,8 @@ server:
 
 grpc:
   server:
-    port: 9094
-    #address: 0.0.0.0
+    port: 9091
+    address: 0.0.0.0
     security:
       enabled: false
 
@@ -18,8 +18,8 @@ spring:
     type: redis
   data:
     redis:
-      host: localhost
-      port: 6380
+      host: matcha-redis-dev
+      port: 6379
 
 application:
   security:

@@ -32,7 +32,7 @@ public class GatewayConfig {
                                         .setRateLimiter(redisRateLimiter)
                                         .setKeyResolver(keyResolver))
                         )
-                        .uri("http://localhost:8081")
+                        .uri("http://matcha-auth-service-dev:8081")
                 )
                 .route(p -> p
                         .path("/get", "/get/**")

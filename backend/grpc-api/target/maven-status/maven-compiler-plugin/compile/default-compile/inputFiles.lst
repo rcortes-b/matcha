@@ -1,0 +1,6 @@
+/home/rcortes-b/Projects/MatchaDatingWebsite/Matcha/backend/grpc-api/target/generated-sources/protobuf/java/me/rcortesb/grpc/JwtTokenRequestOrBuilder.java
+/home/rcortes-b/Projects/MatchaDatingWebsite/Matcha/backend/grpc-api/target/generated-sources/protobuf/java/me/rcortesb/grpc/JwtTokenServiceProto.java
+/home/rcortes-b/Projects/MatchaDatingWebsite/Matcha/backend/grpc-api/target/generated-sources/protobuf/grpc-java/me/rcortesb/grpc/JwtTokenServiceGrpc.java
+/home/rcortes-b/Projects/MatchaDatingWebsite/Matcha/backend/grpc-api/target/generated-sources/protobuf/java/me/rcortesb/grpc/JwtTokenRequest.java
+/home/rcortes-b/Projects/MatchaDatingWebsite/Matcha/backend/grpc-api/target/generated-sources/protobuf/java/me/rcortesb/grpc/JwtTokenResponse.java
+/home/rcortes-b/Projects/MatchaDatingWebsite/Matcha/backend/grpc-api/target/generated-sources/protobuf/java/me/rcortesb/grpc/JwtTokenResponseOrBuilder.java
