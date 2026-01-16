@@ -62,6 +62,7 @@ public class AuthServiceImpl implements AuthService {
         userSecurity.setPassword(passwordEncoder.encode(registerUserDTO.password()));
         userSecurityRepository.save(userSecurity);
         userCreatedProducer.sendUserCreatedEvent(new UserCreatedDTO(userSecurity.getId().toString(),
+                                                                    registerUserDTO.email(),
                                                                     registerUserDTO.firstName(),
                                                                     registerUserDTO.lastName()));
     }
