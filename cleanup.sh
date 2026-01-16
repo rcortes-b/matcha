@@ -3,10 +3,24 @@
 echo "Cleaning docker environment..."
 
 # Containers
+
+## Postgres
 docker stop matcha-postgres-dev
 docker rm matcha-postgres-dev
+
+## Redis
 docker stop matcha-redis-dev
 docker rm matcha-redis-dev
+
+## Zookeeper
+docker stop matcha-zookeeper-dev
+docker rm matcha-zookeeper-dev
+
+## Kafka
+docker stop matcha-kafka-dev
+docker rm matcha-kafka-dev
+docker stop matcha-kafka-init-dev
+docker rm matcha-kafka-init-dev
 
 # Services Containers
 

@@ -14,8 +14,10 @@
 
   <modules>
     <module>grpc-api</module>
+    <module>common-library</module>
     <module>auth</module>
     <module>gateway</module>
+    <!--<module>user</module>-->
   </modules>
 
 </project>

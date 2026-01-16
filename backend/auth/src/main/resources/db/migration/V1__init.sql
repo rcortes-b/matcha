@@ -6,7 +6,7 @@ CREATE TABLE roles (
 INSERT INTO roles VALUES (1, 'USER'), (2, 'ADMIN');
 
 CREATE TABLE auth_users (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(60) NOT NULL,
     is_verified BOOLEAN DEFAULT false,

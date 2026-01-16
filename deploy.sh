@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DB_FILE_PATH=infrastructure/database/docker-compose.yml
+DB_FILE_PATH=infrastructure/utils/docker-compose.yml
 SERVICES_FILE_PATH=infrastructure/docker-compose.yml
 
 ./cleanup.sh
@@ -9,12 +9,9 @@ SERVICES_FILE_PATH=infrastructure/docker-compose.yml
 docker compose -f ${DB_FILE_PATH} up -d
 
 # Services Build #
-#----------------#
-# Auth Service #
-backend/auth/build.sh
-# Gateway Service #
-backend/gateway/build.sh
-
+cd backend
+mvn clean package -DskipTests
+cd ..
 
 #Services Containers
 docker compose -f $SERVICES_FILE_PATH up -d

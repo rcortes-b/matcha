@@ -5,7 +5,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import me.rcortesb.auth.domain.common.CookieProperties;
 import me.rcortesb.auth.domain.common.ERole;
-import me.rcortesb.auth.domain.dto.CredentialsDTO;
+import me.rcortesb.auth.domain.dto.LoginUserDTO;
+import me.rcortesb.auth.domain.dto.RegisterUserDTO;
 import me.rcortesb.auth.domain.entity.Role;
 import me.rcortesb.auth.domain.entity.UserSecurity;
 import me.rcortesb.auth.exceptions.UserExistsException;
@@ -14,6 +15,7 @@ import me.rcortesb.auth.repository.RoleRepository;
 import me.rcortesb.auth.repository.UserSecurityRepository;
 import me.rcortesb.auth.services.AuthService;
 import me.rcortesb.auth.services.TokenService;
+import me.rcortesb.common.UserCreatedDTO;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,39 +32,44 @@ public class AuthServiceImpl implements AuthService {
     final private AuthenticationManager authenticationManager;
     final private TokenService tokenService;
     final private CookieProperties cookieProperties;
+    final private UserCreatedProducer userCreatedProducer;
 
     public AuthServiceImpl(UserSecurityRepository userSecurityRepository,
                            RoleRepository roleRepository, PasswordEncoder passwordEncoder,
                            AuthenticationManager authenticationManager,  TokenService tokenService,
-                           CookieProperties cookieProperties) {
+                           CookieProperties cookieProperties, UserCreatedProducer userCreatedProducer) {
         this.userSecurityRepository = userSecurityRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
         this.cookieProperties = cookieProperties;
+        this.userCreatedProducer = userCreatedProducer;
     }
 
     @Override
-    public void handleRegister(CredentialsDTO credentialsDTO) {
-        UserSecurity userSecurity = userSecurityRepository.findByEmail(credentialsDTO.email());
+    public void handleRegister(RegisterUserDTO registerUserDTO) {
+        UserSecurity userSecurity = userSecurityRepository.findByEmail(registerUserDTO.email());
         if (userSecurity != null) {
             throw new UserExistsException("User already exists");
         }
-        userSecurity = new UserSecurity(credentialsDTO.email(), credentialsDTO.password());
+        userSecurity = new UserSecurity(registerUserDTO.email(), registerUserDTO.password());
         Role role = roleRepository.findByRole(ERole.USER);
         if (role == null) {
             throw new RuntimeException("I fucked up configuring the User - Role relation :)");
         }
         userSecurity.setRole(role);
-        userSecurity.setPassword(passwordEncoder.encode(credentialsDTO.password()));
+        userSecurity.setPassword(passwordEncoder.encode(registerUserDTO.password()));
         userSecurityRepository.save(userSecurity);
+        userCreatedProducer.sendUserCreatedEvent(new UserCreatedDTO(userSecurity.getId().toString(),
+                                                                    registerUserDTO.firstName(),
+                                                                    registerUserDTO.lastName()));
     }
 
     @Override
-    public void handleLogin(CredentialsDTO credentialsDTO) {
-        Authentication authRequest = new UsernamePasswordAuthenticationToken(credentialsDTO.email(),
-                                                                            credentialsDTO.password());
+    public void handleLogin(LoginUserDTO loginUserDTO) {
+        Authentication authRequest = new UsernamePasswordAuthenticationToken(loginUserDTO.email(),
+                                                                            loginUserDTO.password());
         Authentication authentication = authenticationManager.authenticate(authRequest);
         final UserSecurity userSecurity = (UserSecurity) authentication.getPrincipal();
         final String subject = userSecurity.getId().toString();

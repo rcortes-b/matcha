@@ -15,6 +15,8 @@ import reactor.core.publisher.Mono;
 @Component
 public class AuthFilter implements GatewayFilter {
     private final Logger logger = Logger.getLogger(AuthFilter.class);
+    @Value("${security.secret-header.key}")
+    private String secretHeader;
     @Autowired
     private JwtTokenClient jwtTokenClient;
     @Value("${security.cookie.name}")
@@ -31,10 +33,12 @@ public class AuthFilter implements GatewayFilter {
         System.out.println("userId value: " + userId);
         logger.info("[gRPC FETCHING] userId value: " + userId);
 
-        //request mutate headers ...
-
-
-        return chain.filter(exchange);
+        return chain.filter(exchange.mutate()
+                .request(r -> r
+                        .header("X-User-Id", userId)
+                        .header("X-Gateway-Secret", secretHeader))
+                .build()
+        );
 
     }
 

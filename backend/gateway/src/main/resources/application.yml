@@ -27,6 +27,8 @@ grpc:
 security:
   cookie:
     name: ${COOKIE_NAME}
+  secret-header:
+    key: ${SECRET_HEADER}
 
 logging:
   level:

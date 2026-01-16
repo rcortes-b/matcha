@@ -1,0 +1,76 @@
+services:
+  matcha-postgres-dev:
+    container_name: "matcha-postgres-dev"
+    image: postgres:18-alpine
+    env_file: ".env"
+    networks:
+      - "matcha-network-dev"
+    restart: always
+    ports:
+      - "5433:5432"
+    volumes:
+      - matcha-db-data-dev:/var/lib/postgresql/data
+      - ./postgres:/docker-entrypoint-initdb.d
+
+  matcha-redis-dev:
+    container_name: "matcha-redis-dev"
+    image: redis:8.4.0-alpine
+    env_file: ".env"
+    networks:
+      - "matcha-network-dev"
+    restart: always
+    ports:
+      - "6380:6379"
+
+  matcha-zookeeper-dev:
+    container_name: matcha-zookeeper-dev
+    image: confluentinc/cp-zookeeper:7.6.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    networks:
+      - "matcha-network-dev"
+    restart: always
+    ports:
+      - "2182:2182"
+
+  matcha-kafka-dev:
+    container_name: matcha-kafka-dev
+    image: confluentinc/cp-kafka:7.6.0
+    depends_on:
+      - matcha-zookeeper-dev
+    ports:
+      - "9098:9098"
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: matcha-zookeeper-dev:2181
+      # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://matcha-kafka-dev:9092
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:9092,EXTERNAL://0.0.0.0:9098
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://matcha-kafka-dev:9092,EXTERNAL://localhost:9098
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - "matcha-network-dev"
+    restart: always
+
+  matcha-kafka-init-dev:
+    container_name: matcha-kafka-init-dev
+    image: confluentinc/cp-kafka:7.6.0
+    depends_on:
+      - matcha-kafka-dev
+    networks:
+      - "matcha-network-dev"
+    volumes:
+      - ./kafka/kafka_init.sh:/kafka_init.sh
+    command: ["bash", "/kafka_init.sh"]
+    
+
+volumes:
+  matcha-db-data-dev:
+    name: matcha-db-data-dev
+
+networks:
+  matcha-network-dev:
+    name: matcha-network-dev
+    driver: bridge

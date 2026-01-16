@@ -20,6 +20,11 @@ spring:
     redis:
       host: matcha-redis-dev
       port: 6379
+  kafka:
+    bootstrap-servers: matcha-kafka-dev:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 application:
   security:

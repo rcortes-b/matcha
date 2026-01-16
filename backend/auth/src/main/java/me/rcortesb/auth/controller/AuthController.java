@@ -2,7 +2,8 @@ package me.rcortesb.auth.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import me.rcortesb.auth.domain.dto.CredentialsDTO;
+import me.rcortesb.auth.domain.dto.LoginUserDTO;
+import me.rcortesb.auth.domain.dto.RegisterUserDTO;
 import me.rcortesb.auth.services.AuthService;
 import me.rcortesb.auth.services.VerificationService;
 import org.jboss.logging.Logger;
@@ -30,16 +31,16 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody @Valid CredentialsDTO credentialsDTO) {
+    public ResponseEntity<Void> register(@RequestBody @Valid RegisterUserDTO registerUserDTO) {
         LOGGER.info("[CONTROLLER - REGISTER]: ARRIVED");
-        authService.handleRegister(credentialsDTO);
+        authService.handleRegister(registerUserDTO);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody CredentialsDTO credentialsDTO) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginUserDTO loginUserDTO) {
         try {
-            authService.handleLogin(credentialsDTO);
+            authService.handleLogin(loginUserDTO);
             return ResponseEntity.ok(Map.of(
                             "code", "SUCCESS",
                             "message", "Login has been successful"));
@@ -50,7 +51,7 @@ public class AuthController {
                             "message", "Username or password is incorrect"));
         } catch (DisabledException e) {
             final String code = verificationService.generateVerificationCode();
-            verificationService.sendEmail(credentialsDTO.email(), code);
+            verificationService.sendEmail(loginUserDTO.email(), code);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of(
                             "code", "USER_NOT_VERIFIED",
