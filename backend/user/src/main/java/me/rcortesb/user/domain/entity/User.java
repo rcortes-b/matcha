@@ -5,6 +5,8 @@ import me.rcortesb.user.domain.common.EGender;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -45,6 +47,25 @@ public class User {
 
     @Column(name = "created_at")
     private Instant createdAt;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_tags",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User other = (User) o;
+        return id != null && id.equals(other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
     public UUID getId() {
         return id;
@@ -116,6 +137,14 @@ public class User {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void  setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     @Override

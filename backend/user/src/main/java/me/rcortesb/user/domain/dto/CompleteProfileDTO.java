@@ -1,6 +1,8 @@
 package me.rcortesb.user.domain.dto;
 
-public record CompleteProfileDTO(String birthDate,
+import java.time.LocalDate;
+
+public record CompleteProfileDTO(LocalDate birthDate,
                                  String gender,
                                  String sexualPreference,
                                  String biography) {

@@ -8,6 +8,13 @@ import java.util.Set;
 @Entity
 @Table(name = "sexual_preference")
 public class SexualPreference {
+    public SexualPreference() {}
+
+    public SexualPreference(Short id, String preference) {
+        this.id = id;
+        this.preference = preference;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -1,5 +1,6 @@
 spring:
   datasource:
+    #url: jdbc:postgresql://matcha-postgres-dev:5432/db_user
     url: jdbc:postgresql://localhost:5433/db_user
     username: ${DB_USER:matcha_user}
     password: ${DB_PASSWORD:topsecretpassword}
@@ -22,3 +23,6 @@ spring:
 server:
   port: 8082
 
+security:
+  secret-header:
+    value: ${SECRET_HEADER:wSmbKmWf5bxWiG3xI2PAzz8o7dvX4F9i9NGVX24NVm6}

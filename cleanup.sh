@@ -29,11 +29,16 @@ docker stop matcha-auth-service-dev
 docker rm matcha-auth-service-dev
 docker image rm infrastructure-matcha-auth-service-dev
 
+
 # --- Gateway Service --- #
 docker stop matcha-gateway-service-dev
 docker rm matcha-gateway-service-dev
 docker image rm infrastructure-matcha-gateway-service-dev
 
+# --- User Service --- #
+docker stop matcha-user-service-dev
+docker rm matcha-user-service-dev
+docker image rm infrastructure-matcha-user-service-dev
 
 #Volumes
 docker volume rm matcha-db-data-dev

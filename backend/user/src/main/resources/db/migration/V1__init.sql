@@ -3,9 +3,9 @@ CREATE TABLE sexual_preference (
     preference VARCHAR(20) UNIQUE NOT NULL
 );
 
-INSERT INTO sexual_preference(preference) VALUES ('heterosexual'),
-                                                 ('homosexual'),
-                                                 ('bisexual');
+INSERT INTO sexual_preference(preference) VALUES ('HETEROSEXUAL'),
+                                                 ('HOMOSEXUAL'),
+                                                 ('BISEXUAL');
 
 CREATE TABLE profile_user (
     id UUID UNIQUE NOT NULL PRIMARY KEY,
@@ -18,7 +18,7 @@ CREATE TABLE profile_user (
     biography VARCHAR(200),
     -- Pictures
     -- Location
-    -- Tags
+    -- Tag
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
