@@ -23,6 +23,10 @@ app.get("/verify-user", (_, res) =>
   res.sendFile(__dirname + "/html/verify-user.html")
 );
 
+app.get("/complete-profile", (_, res) =>
+  res.sendFile(__dirname + "/html/complete-profile.html")
+);
+
 app.listen(3000, () =>
   console.log("http://localhost:3000")
 );

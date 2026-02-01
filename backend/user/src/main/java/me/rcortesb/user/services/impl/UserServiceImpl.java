@@ -31,17 +31,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void completeProfile(String userId, CompleteProfileDTO completeProfileDTO) {
         UUID uuid = UUID.fromString(userId);
         User user = userRepository.findById(uuid).orElseThrow(() -> new RuntimeException("user not found"));
-        SexualPreference sexualPreference = sexualPreferenceRepository.findByPreference(completeProfileDTO.sexualPreference());
+        SexualPreference sexualPreference = sexualPreferenceRepository
+                                            .findByPreference(completeProfileDTO.sexualPreference().toUpperCase());
         if (sexualPreference == null) {
             throw new RuntimeException("Sexual preference is invalid");
         }
-        user.setGender(EGender.valueOf(completeProfileDTO.gender()));
+        user.setGender(EGender.valueOf(completeProfileDTO.gender().toUpperCase()));
         user.setSexualPreference(sexualPreference);
         user.setBirthDate(completeProfileDTO.birthDate());
         user.setBiography(completeProfileDTO.biography());
+        getListOfNewTags(completeProfileDTO.tags(), user.getTags());
         userRepository.save(user);
     }
 
@@ -59,7 +62,10 @@ public class UserServiceImpl implements UserService {
                 it.remove();
             }
         }
+        getListOfNewTags(tags, userTags);
+    }
 
+    public void getListOfNewTags(List<String> tags, Set<Tag> userTags) {
         for (String tagName : tags) {
             Tag newTag = tagRepository.findByTagName(tagName);
             if (newTag == null) {

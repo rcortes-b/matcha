@@ -66,12 +66,18 @@ public class UserProfileTest {
         final String gender = "MALE";
         final String sexualPreference = "HETEROSEXUAL";
         final String biography = "I spend most part of the day programming and I'm fine with that!";
-        CompleteProfileDTO completeProfileDTO = new CompleteProfileDTO(now, gender, sexualPreference, biography);
+        List<String> tags =  new ArrayList<>();
+        tags.add("fitness"); tags.add("technology"); tags.add("hiking");
+        CompleteProfileDTO completeProfileDTO = new CompleteProfileDTO(now, gender, sexualPreference, biography,
+                                                                        tags);
 
         SexualPreference sexualPreferenceObj = new SexualPreference(Short.valueOf("1"), sexualPreference);
 
         when(sexualPreferenceRepository.findByPreference(sexualPreference)).thenReturn(sexualPreferenceObj);
         when(userRepository.findById(uuid)).thenReturn(Optional.of(user));
+        when(tagRepository.findByTagName("fitness")).thenReturn(new Tag(Short.valueOf("1"), "fitness"));
+        when(tagRepository.findByTagName("technology")).thenReturn(new Tag(Short.valueOf("2"), "technology"));
+        when(tagRepository.findByTagName("hiking")).thenReturn(new Tag(Short.valueOf("3"), "hiking"));
         given(userRepository.save(any(User.class))).willReturn(user);
 
         userService.completeProfile(uuid.toString(), completeProfileDTO);
@@ -95,21 +101,25 @@ public class UserProfileTest {
         System.out.println(user.toString());
         List<String> tags = new ArrayList<>();
         tags.add("fitness");
-        tags.add("technology");
+        tags.add("music");
+        tags.add("animals");
 
         Tag fitnessTag = new Tag(Short.valueOf("1"), "fitness");
-        Tag techTag = new Tag(Short.valueOf("2"), "technology");
+        Tag musicTag = new Tag(Short.valueOf("4"), "music");
+        Tag animalsTag = new Tag(Short.valueOf("6"), "animals");
 
         when(tagRepository.findByTagName("fitness")).thenReturn(fitnessTag);
-        when(tagRepository.findByTagName("technology")).thenReturn(techTag);
-
+        when(tagRepository.findByTagName("music")).thenReturn(musicTag);
+        when(tagRepository.findByTagName("animals")).thenReturn(animalsTag);
         System.out.println("\n Before: " + user.getTags());
         userService.updateTagSelection(user.getId().toString(), tags);
         System.out.println("\n After: " + user.getTags());
         System.out.println(user.getTags());
-        assertEquals(false, user.getTags().contains("default"));
+        assertEquals(false, user.getTags().contains(new Tag(Short.valueOf("3"), "hiking")));
+        assertEquals(false, user.getTags().contains(new Tag(Short.valueOf("2"), "technology")));
         assertEquals(true, user.getTags().contains(fitnessTag));
-        assertEquals(true, user.getTags().contains(techTag));
+        assertEquals(true, user.getTags().contains(musicTag));
+        assertEquals(true, user.getTags().contains(animalsTag));
 
 
     }

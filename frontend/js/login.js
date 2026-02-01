@@ -14,6 +14,6 @@ document.getElementById("loginForm").onsubmit = async (e) => {
   if (res.status == 401) {
 	window.location.href = "/verify-user?email=" + body.email;
   } else if (res.ok) {
-	window.location.href = "/";
+	window.location.href = "/complete-profile";
   }
 };

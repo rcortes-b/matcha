@@ -16,9 +16,12 @@ CREATE TABLE profile_user (
     gender VARCHAR(6), -- This may be male or female
     sexual_preference_id SMALLINT references sexual_preference(id),
     biography VARCHAR(200),
+    latitude DOUBLE PRECISION,
+    longitude DOUBLE PRECISION,
+    country_code VARCHAR(2),
+    state VARCHAR(50),
+    city VARCHAR (50),
     -- Pictures
-    -- Location
-    -- Tag
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -48,7 +51,12 @@ CREATE TABLE tags (
 );
 
 INSERT INTO tags (tag) VALUES ('fitness'),
-                              ('technology');
+                              ('technology'),
+                              ('hiking'),
+                              ('music'),
+                              ('travel'),
+                              ('animals'),
+                              ('food');
 
 CREATE TABLE user_tags (
     user_id UUID references profile_user(id),
