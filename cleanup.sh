@@ -22,6 +22,10 @@ docker rm matcha-kafka-dev
 docker stop matcha-kafka-init-dev
 docker rm matcha-kafka-init-dev
 
+## Elasticsearch
+docker stop matcha-elasticsearch-dev
+docker rm matcha-elasticsearch-dev
+
 # Services Containers
 
 # --- Auth Service --- #

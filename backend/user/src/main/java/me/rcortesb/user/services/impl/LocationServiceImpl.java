@@ -5,7 +5,6 @@ import me.rcortesb.user.domain.dto.OSMResponseDTO;
 import me.rcortesb.user.domain.entity.User;
 import me.rcortesb.user.repository.UserRepository;
 import me.rcortesb.user.services.LocationService;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -42,7 +41,6 @@ public class LocationServiceImpl implements LocationService {
     }
 
     private OSMResponseDTO getCurrentLocation(double lat, double lon) {
-        //final String apiURL = "https://nominatim.openstreetmap.org#/reverse?format=json&lat=" + lat + "&lon=" + lon;
         OSMResponseDTO apiResponse =
                 webClient.get()
                         .uri(uriBuilder -> uriBuilder
@@ -54,17 +52,6 @@ public class LocationServiceImpl implements LocationService {
                         .retrieve()
                         .bodyToMono(OSMResponseDTO.class)
                         .block();
-        /*webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/reverse")
-                        .queryParam("format", "json")
-                        .queryParam("lat", lat)
-                        .queryParam("lon", lon)
-                        .build())
-                .retrieve()
-                .bodyToMono(String.class)
-                .doOnNext(System.out::println)
-                .block();*/
         return apiResponse;
     }
 

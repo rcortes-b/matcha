@@ -1,4 +1,17 @@
 services:
+  matcha-elasticsearch-dev:
+    container_name: matcha-elasticsearch-dev
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
+    networks:
+      - "matcha-network-dev"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      #- ES_JAVA_OPTS=-Xms512m -Xmx512m
+    restart: always
+    ports:
+      - "9200:9200"
+
   matcha-postgres-dev:
     container_name: "matcha-postgres-dev"
     image: postgres:18-alpine
@@ -64,7 +77,6 @@ services:
     volumes:
       - ./kafka/kafka_init.sh:/kafka_init.sh
     command: ["bash", "/kafka_init.sh"]
-    
 
 volumes:
   matcha-db-data-dev:

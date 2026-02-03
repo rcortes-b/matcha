@@ -28,20 +28,20 @@ services:
     env_file:
       - "../backend/gateway/.env"
 
-  #matcha-user-service-dev:
-  #  container_name: matcha-user-service-dev
-  #  build:
-  #    context: ..
-  #    dockerfile: infrastructure/services/user-service/Dockerfile
-  #  networks:
-  #    - "matcha-network-dev"
-  #  restart: always
-  #  ports:
-  #    - "8082:8082"
-  #  depends_on:
-  #    - matcha-gateway-service-dev
-  #  env_file:
-  #    - "../backend/user/.env"
+  matcha-user-service-dev:
+    container_name: matcha-user-service-dev
+    build:
+      context: ..
+      dockerfile: infrastructure/services/user-service/Dockerfile
+    networks:
+      - "matcha-network-dev"
+    restart: always
+    ports:
+      - "8082:8082"
+    depends_on:
+      - matcha-gateway-service-dev
+    env_file:
+      - "../backend/user/.env"
 
 networks:
   matcha-network-dev:

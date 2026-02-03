@@ -52,11 +52,11 @@ public class GatewayConfig {
                         )
                         .uri("http://matcha-auth-service-dev:8081")
                 )
-                /*.route(p -> p
+                .route(p -> p
                         .path("/api/users/**")
                         .filters(f -> f
                                 .circuitBreaker(config -> config
-                                        .setName("authServiceCB")
+                                        .setName("defaultServiceCB")
                                         .setFallbackUri("forward:/fallback/default"))
                                 .requestRateLimiter(config -> config
                                         .setRateLimiter(redisRateLimiter)
@@ -64,7 +64,7 @@ public class GatewayConfig {
                                 .filter(authFilter)
                         )
                         .uri("http://matcha-user-service-dev:8082")
-                )*/
+                )
                 .route(p -> p
                         .path("/get", "/get/**")
                         .filters(f -> f
