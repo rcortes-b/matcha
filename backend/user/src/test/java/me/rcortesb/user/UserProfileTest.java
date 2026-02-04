@@ -62,7 +62,6 @@ public class UserProfileTest {
     void completeProfileTest() {
         UUID uuid = user.getId();
         final LocalDate now = LocalDate.now();
-        final String birthDate = now.toString();
         final String gender = "MALE";
         final String sexualPreference = "HETEROSEXUAL";
         final String biography = "I spend most part of the day programming and I'm fine with that!";

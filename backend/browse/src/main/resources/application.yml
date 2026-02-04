@@ -3,3 +3,13 @@ spring:
     name: browse
   elasticsearch:
     uris: http://localhost:9200
+  kafka:
+    #bootstrap-servers: matcha-kafka-dev:9092
+    bootstrap-servers: localhost:9098
+    consumer:
+      group-id: browse-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    properties:
+      spring.json.trusted.packages: "*"

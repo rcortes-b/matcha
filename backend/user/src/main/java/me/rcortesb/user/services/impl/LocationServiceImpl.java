@@ -14,30 +14,34 @@ import java.util.UUID;
 public class LocationServiceImpl implements LocationService {
     final private WebClient webClient;
     final private UserRepository userRepository;
+    final private UserProfileUpdateProducer userProfileUpdateProducer;
 
-    public LocationServiceImpl(WebClient webClient, UserRepository userRepository) {
+    public LocationServiceImpl(WebClient webClient, UserRepository userRepository,
+                               UserProfileUpdateProducer userProfileUpdateProducer) {
         this.webClient = webClient;
         this.userRepository = userRepository;
+        this.userProfileUpdateProducer = userProfileUpdateProducer;
     }
 
     @Override
     public void updateLocation(String userId, LocationPointDTO locationPointDTO) {
-        User currectUser = userRepository.findById(UUID.fromString(userId))
+        User currentUser = userRepository.findById(UUID.fromString(userId))
                                          .orElseThrow(() -> new RuntimeException("user not found"));
         double lat = locationPointDTO.latitude();
         double lon = locationPointDTO.longitude();
 
         OSMResponseDTO location = getCurrentLocation(lat, lon);
-        currectUser.setLongitude(lon);
-        currectUser.setLatitude(lat);
-        currectUser.setCity(getFirstValidAddress(location.address().city(),
+        currentUser.setLongitude(lon);
+        currentUser.setLatitude(lat);
+        currentUser.setCity(getFirstValidAddress(location.address().city(),
                                                  location.address().town(),
                                                  location.address().village()));
-        currectUser.setState(getFirstValidAddress(location.address().state(),
+        currentUser.setState(getFirstValidAddress(location.address().state(),
                                                   location.address().province(),
                                                   location.address().region()));
-        currectUser.setCountryCode(location.address().countryCode());
-        userRepository.save(currectUser);
+        currentUser.setCountryCode(location.address().countryCode());
+        userRepository.save(currentUser);
+        userProfileUpdateProducer.sendUserProfileUpdateEvent(currentUser);
     }
 
     private OSMResponseDTO getCurrentLocation(double lat, double lon) {

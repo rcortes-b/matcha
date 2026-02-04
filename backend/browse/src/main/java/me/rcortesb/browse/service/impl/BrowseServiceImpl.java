@@ -1,8 +1,12 @@
-package me.rcortesb.browsing.service.impl;
+package me.rcortesb.browse.service.impl;
 
-import me.rcortesb.browsing.service.BrowseService;
+import java.util.List;
+
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.stereotype.Service;
+
+import me.rcortesb.browse.service.BrowseService;
+import me.rcortesb.common.UserResponseDTO;
 
 @Service
 public class BrowseServiceImpl implements BrowseService {
@@ -12,7 +16,7 @@ public class BrowseServiceImpl implements BrowseService {
         this.operations = elasticsearchOperations;
     }
 
-    public void saveUserInDocument() {
-
+    public List<UserResponseDTO> searchUsersByDistance() {
+		return null;
     }
 }
