@@ -1,8 +1,15 @@
+server:
+  port: 8083
 spring:
   application:
     name: browse
   elasticsearch:
     uris: http://localhost:9200
+    #restclient:
+    #  sniff:
+    #    enabled: false
+    #compatibility-headers:
+    #  enabled: true
   kafka:
     #bootstrap-servers: matcha-kafka-dev:9092
     bootstrap-servers: localhost:9098
@@ -11,5 +18,18 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-    properties:
-      spring.json.trusted.packages: "*"
+      properties:
+        spring.json.trusted.packages: "*"
+  datasource:
+    #url: jdbc:postgresql://matcha-postgres-dev:5432/db_user
+    url: jdbc:postgresql://localhost:5433/db_user
+    username: ${DB_USER:matcha_user}
+    password: ${DB_PASSWORD:topsecretpassword}
+
+#logging:
+#  level:
+#    org.springframework.kafka: DEBUG
+#    org.apache.kafka: DEBUG
+logging:
+  level:
+    org.springframework.data.elasticsearch.client.LOGGER: TRACE

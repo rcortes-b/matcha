@@ -9,7 +9,8 @@ done
 echo "Kafka is ready"
 
 TOPICS=(
-  "user.created:3"
+  "user.created:3",
+  "profile.update:3"
 )
 
 for topic in "${TOPICS[@]}"; do
