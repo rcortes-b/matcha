@@ -38,6 +38,7 @@ services:
     restart: always
     ports:
       - "8082:8082"
+      - "9093:9093"
     depends_on:
       - matcha-gateway-service-dev
     env_file:

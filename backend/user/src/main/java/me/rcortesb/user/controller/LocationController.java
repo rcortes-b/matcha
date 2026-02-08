@@ -22,5 +22,8 @@ public class LocationController {
         return ResponseEntity.ok().build();
     }
 
-
+	@PostMapping("/loadUsersToES")
+	public void getMethodName() {
+		locationService.loadUsersToES();
+	}
 }

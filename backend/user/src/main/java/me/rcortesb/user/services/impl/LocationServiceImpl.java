@@ -8,6 +8,7 @@ import me.rcortesb.user.services.LocationService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -70,4 +71,13 @@ public class LocationServiceImpl implements LocationService {
         }
         return "unknown";
     }
+
+	@Override
+	public void loadUsersToES() {
+		List<User> users = userRepository.findAll();
+
+		for (User user : users) {
+			userProfileUpdateProducer.sendUserProfileUpdateEvent(user);	
+		}
+	}
 }

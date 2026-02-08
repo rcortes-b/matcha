@@ -25,6 +25,12 @@ spring:
     url: jdbc:postgresql://localhost:5433/db_user
     username: ${DB_USER:matcha_user}
     password: ${DB_PASSWORD:topsecretpassword}
+grpc:
+  client:
+    search-filter-service:
+      #address: "static://matcha-auth-service-dev:9091"
+      address: "static://localhost:9093"
+      negotiationType: plaintext
 
 #logging:
 #  level:

@@ -23,6 +23,12 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     properties:
       spring.json.trusted.packages: "*"
+grpc:
+  server:
+    port: 9093
+    address: 0.0.0.0
+    security:
+      enabled: false
 server:
   port: 8082
 

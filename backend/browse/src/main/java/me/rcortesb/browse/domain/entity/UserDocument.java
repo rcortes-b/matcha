@@ -20,7 +20,7 @@ public class UserDocument {
     private String gender;
 
     @Field(type = FieldType.Keyword)
-    private String sexualPreference;
+    private List<String> interestedIn;
 
     @Field
     private GeoPoint location;
@@ -52,12 +52,12 @@ public class UserDocument {
         this.gender = gender;
     }
 
-    public String getSexualPreference() {
-        return sexualPreference;
+    public List<String> getInterestedIn() {
+        return interestedIn;
     }
 
-    public void setSexualPreference(String sexualPreference) {
-        this.sexualPreference = sexualPreference;
+    public void setInterestedIn(List<String> interestedIn) {
+        this.interestedIn = interestedIn;
     }
 
     public GeoPoint getLocation() {
@@ -82,18 +82,9 @@ public class UserDocument {
                 "id='" + id + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
-                ", sexualPreference='" + sexualPreference + '\'' +
+                ", interestedIn='" + interestedIn + '\'' +
                 ", location=" + location +
                 ", tags=" + tags +
                 '}';
     }
 }
-/*
-public record UserProfileUpdateDTO(String userId,
-                                   int age,
-                                   String gender,
-                                   String genderPreference,
-                                   double latitude,
-                                   double longitude,
-                                   List<String> tags) {}
- */

@@ -5,6 +5,4 @@ import java.util.List;
 public record SearchFilter(List<String> tags,
 							int minAge,
 							int maxAge,
-							int distance) {
-	
-}
+							int distance) {}

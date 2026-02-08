@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -30,5 +31,5 @@ public class UserController {
         System.out.println("Selecting tags: " + tags.toString());
         userService.updateTagSelection(userId, tags);
         return ResponseEntity.ok().build();
-    }
+    }	
 }

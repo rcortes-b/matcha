@@ -3,7 +3,6 @@ package me.rcortesb.user.domain.dto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import me.rcortesb.user.domain.common.EGender;
 
 import java.time.LocalDate;
 import java.util.List;
