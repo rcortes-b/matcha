@@ -32,7 +32,7 @@ public class UserProfileUpdateProducer {
             tags.add(tag.getTagName());
 
         UserProfileUpdateDTO dto = new UserProfileUpdateDTO(user.getId().toString(),
-                Period.between(user.getBirthDate(), LocalDate.now()).getYears(),
+                user.getAge(),
                 user.getGender().toString(),
                 user.getSexualPreference().getPreference(),
                 user.getLatitude(),

@@ -46,17 +46,17 @@ public class BrowseServiceImpl implements BrowseService {
 		this.searchFilterClient = searchFilterClient;
     }
 
-    public List<UserResponseDTO> searchUsersByDistance(String userId, SearchFilter filter) {
+    public List<UserResponseDTO> searchUsersByFilters(String userId, SearchFilter filter) {
 		SearchFilterRPC searchData = searchFilterClient.fetchData(userId);
 		/*final String fakeGender = "MALE";
 		final String fakePreference = "HETEROSEXUAL";
 		final double fakeLatitude = 39.545341;
 		final double fakeLongitude = -0.392908;*/
 		List<FieldValue> genderInterests = getGendersInterests(searchData.gender(), searchData.sexualPreference())
-										.stream()
-										.map(FieldValue::of)
-										.toList();
-		
+										  .stream()
+										  .map(FieldValue::of)
+										  .toList();
+		System.out.println(getGendersInterests(searchData.gender(), searchData.sexualPreference()));
 		NativeQuery query = NativeQuery.builder()
             .withQuery(q -> q
                 .bool(b -> b
@@ -67,40 +67,41 @@ public class BrowseServiceImpl implements BrowseService {
 					))
 
 					// FILTER 2: The person I see must like MY gender
-					// (This handles the "Heterosexual" vs "Gay" check automatically)
 					.filter(f -> f.term(t -> t
 						.field("interestedIn")
 						.value(searchData.gender())
 					))
-                    // 1. MUST: Gender preference
-                    //.must(m -> m.term(t -> t.field("gender").value(filter.getPreference())))
                     
-                    // 2. FILTER: Age range (Doesn't affect score, very fast)
+                    // FILTER 3: Age range
                     .filter(f -> f.range(r -> r
 						.number(n -> n
                         	.field("age")
-                        	.gte((double)filter.minAge())
-                        	.lte((double)filter.maxAge())
+                        	.gte((double)filter.getMinAge())
+                        	.lte((double)filter.getMaxAge())
 					)))
                     
-                    // 3. FILTER: Geo Distance (Find users within 50km)
+                    // FILTER 4: Geo Distance (Users within 'x' km)
                     .filter(f -> f.geoDistance(g -> g
                         .field("location")
-                        .distance(filter.distance() + "km")
+                        .distance(filter.getDistance() + "km")
                         .location(loc -> loc.latlon(l -> l.lat(searchData.latitude())
 														.lon(searchData.longitude())))
 					))
 
-                    // 4. SHOULD: Common Interests (Boosts profile if they share hobbies)
+                    // SHOULD 5: Common Interests (Boosts profile if they share hobbies)
                     .should(s -> s.match(m -> m
                         .field("tags")
-                        .query(String.join(" ", filter.tags())
+                        .query(String.join(" ", filter.getTags())
 					)))
 				)
 			)
-            .withPageable(PageRequest.of(0, 20))
+            .withPageable(PageRequest.of(filter.getPage(), filter.getPageSize()))
             .build();
 		SearchHits<UserDocument> search = operations.search(query, UserDocument.class);
+		System.out.println("TOTAL HITS: " + search.getTotalHits());
+		long loopValueToDelete = filter.getPageSize() < search.getTotalHits() ? filter.getPageSize() : search.getTotalHits();
+		for (int i = 0; i < loopValueToDelete; i++)
+			System.out.println(search.getSearchHit(i).getContent().toString());
 		// This is temporal behaviour
 		if (search.getTotalHits() == 0) {
 			throw new RuntimeException("NOTHING FOUND WITH ELASTICSEARCH, LOOK AT THE FILTERS!");
@@ -137,7 +138,6 @@ public class BrowseServiceImpl implements BrowseService {
 	}
 
 	private List<UserResponseDTO> retrieveUsers(List<String> userIds) {
-		//return grpc call to retrieve the user data
-		return null;
+		return searchFilterClient.fetchUsers(userIds);
 	}
 }

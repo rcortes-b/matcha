@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -64,6 +65,20 @@ public class UserServiceImpl implements UserService {
         }
         getListOfNewTags(tags, userTags);
     }
+
+	@Override
+	@Transactional
+	public Optional<User> getUserById(UUID userId) {
+		return userRepository.findById(userId);
+	}
+
+	@Override
+	@Transactional
+	public List<User> getUsersByIdList(List<String> userIds) {
+		return userRepository.findAllById(userIds.stream()
+												 .map(UUID::fromString)
+												 .toList());
+	}
 
     public void getListOfNewTags(List<String> tags, Set<Tag> userTags) {
         for (String tagName : tags) {

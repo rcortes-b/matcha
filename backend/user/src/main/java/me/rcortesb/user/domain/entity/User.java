@@ -5,6 +5,7 @@ import me.rcortesb.user.domain.common.EGender;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -217,4 +218,8 @@ public class User {
                 ", createdAt=" + createdAt +
                 '}';
     }
+
+	public int getAge() {
+		return Period.between(this.birthDate, LocalDate.now()).getYears();
+	}
 }

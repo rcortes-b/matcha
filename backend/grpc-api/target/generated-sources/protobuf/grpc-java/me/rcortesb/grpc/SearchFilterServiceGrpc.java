@@ -6,7 +6,7 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.63.0)",
-    comments = "Source: gender-preference.proto")
+    comments = "Source: search-filter.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class SearchFilterServiceGrpc {
 
@@ -44,6 +44,37 @@ public final class SearchFilterServiceGrpc {
       }
     }
     return getGetSearchFilterMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<me.rcortesb.grpc.UserHitRequest,
+      me.rcortesb.grpc.UserHitResponse> getRetrieveUsersMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "retrieveUsers",
+      requestType = me.rcortesb.grpc.UserHitRequest.class,
+      responseType = me.rcortesb.grpc.UserHitResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<me.rcortesb.grpc.UserHitRequest,
+      me.rcortesb.grpc.UserHitResponse> getRetrieveUsersMethod() {
+    io.grpc.MethodDescriptor<me.rcortesb.grpc.UserHitRequest, me.rcortesb.grpc.UserHitResponse> getRetrieveUsersMethod;
+    if ((getRetrieveUsersMethod = SearchFilterServiceGrpc.getRetrieveUsersMethod) == null) {
+      synchronized (SearchFilterServiceGrpc.class) {
+        if ((getRetrieveUsersMethod = SearchFilterServiceGrpc.getRetrieveUsersMethod) == null) {
+          SearchFilterServiceGrpc.getRetrieveUsersMethod = getRetrieveUsersMethod =
+              io.grpc.MethodDescriptor.<me.rcortesb.grpc.UserHitRequest, me.rcortesb.grpc.UserHitResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "retrieveUsers"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  me.rcortesb.grpc.UserHitRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  me.rcortesb.grpc.UserHitResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new SearchFilterServiceMethodDescriptorSupplier("retrieveUsers"))
+              .build();
+        }
+      }
+    }
+    return getRetrieveUsersMethod;
   }
 
   /**
@@ -100,6 +131,13 @@ public final class SearchFilterServiceGrpc {
         io.grpc.stub.StreamObserver<me.rcortesb.grpc.SearchFilterResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetSearchFilterMethod(), responseObserver);
     }
+
+    /**
+     */
+    default void retrieveUsers(me.rcortesb.grpc.UserHitRequest request,
+        io.grpc.stub.StreamObserver<me.rcortesb.grpc.UserHitResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRetrieveUsersMethod(), responseObserver);
+    }
   }
 
   /**
@@ -136,6 +174,14 @@ public final class SearchFilterServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetSearchFilterMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void retrieveUsers(me.rcortesb.grpc.UserHitRequest request,
+        io.grpc.stub.StreamObserver<me.rcortesb.grpc.UserHitResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getRetrieveUsersMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -159,6 +205,13 @@ public final class SearchFilterServiceGrpc {
     public me.rcortesb.grpc.SearchFilterResponse getSearchFilter(me.rcortesb.grpc.SearchFilterRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetSearchFilterMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public me.rcortesb.grpc.UserHitResponse retrieveUsers(me.rcortesb.grpc.UserHitRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getRetrieveUsersMethod(), getCallOptions(), request);
     }
   }
 
@@ -185,9 +238,18 @@ public final class SearchFilterServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetSearchFilterMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<me.rcortesb.grpc.UserHitResponse> retrieveUsers(
+        me.rcortesb.grpc.UserHitRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getRetrieveUsersMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_GET_SEARCH_FILTER = 0;
+  private static final int METHODID_RETRIEVE_USERS = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -209,6 +271,10 @@ public final class SearchFilterServiceGrpc {
         case METHODID_GET_SEARCH_FILTER:
           serviceImpl.getSearchFilter((me.rcortesb.grpc.SearchFilterRequest) request,
               (io.grpc.stub.StreamObserver<me.rcortesb.grpc.SearchFilterResponse>) responseObserver);
+          break;
+        case METHODID_RETRIEVE_USERS:
+          serviceImpl.retrieveUsers((me.rcortesb.grpc.UserHitRequest) request,
+              (io.grpc.stub.StreamObserver<me.rcortesb.grpc.UserHitResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -235,6 +301,13 @@ public final class SearchFilterServiceGrpc {
               me.rcortesb.grpc.SearchFilterRequest,
               me.rcortesb.grpc.SearchFilterResponse>(
                 service, METHODID_GET_SEARCH_FILTER)))
+        .addMethod(
+          getRetrieveUsersMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              me.rcortesb.grpc.UserHitRequest,
+              me.rcortesb.grpc.UserHitResponse>(
+                service, METHODID_RETRIEVE_USERS)))
         .build();
   }
 
@@ -284,6 +357,7 @@ public final class SearchFilterServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new SearchFilterServiceFileDescriptorSupplier())
               .addMethod(getGetSearchFilterMethod())
+              .addMethod(getRetrieveUsersMethod())
               .build();
         }
       }

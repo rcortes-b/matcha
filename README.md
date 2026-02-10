@@ -8,26 +8,28 @@ This project is inspired by the 42 School project called “Matcha.” While the
 This decision is not due to a lack of ability to work without a framework, but rather because I do not intend to submit this project at 42. My goal is to follow an industry-standard approach rather than rely on a less widely adopted solution.
 
 The original project requirements can be found here:
-[Link to the project requirements](https://cdn.intra.42.fr/pdf/pdf/188690/en.subject.pdf)
+[Link to the project requirements](https://cdn.intra.42.fr/pdf/pdf/196359/en.subject.pdf)
 
 In the following sections, I explain the overall approach I followed, the stack I chose to work with, and why these technologies made sense for this project.
+
+I have another README in the root of the repository called 'README.dev.md'. I will be using it to list the things that I plan to implement and to take notes from the new things learnt while exploring new tools such as Kafka or Elasticsearch.
 
 ## Tech Stack
 
 - **Backend Language:** Java
 - **Backend Framework:** Spring Boot
 - **Testing:** JUnit & Mockito
-- **Message Broker:** Apache Kafka
+- **Event Programming:** Apache Kafka
 - **Search Engine:** Elasticsearch
 - **Database:** PostgreSQL
 - **Cache:** Redis
-- **Real-time:** WebSocket (Spring WebSocket)
+- **Real-time messages:** WebSocket
 - **API Gateway:** Spring Cloud Gateway
 - **Containerization:** Docker & Docker Compose
-- **CI/CD:** Jenkins
-- **Frontend:** Tailwind CSS, HTML, Angular, Bootstrap
 - **Client to Server Communication:** REST API
 - **Service to Service Communication:** gRPC
+- **Frontend:** Tailwind CSS, HTML, Angular, Bootstrap
+- **CI/CD:** Jenkins
 
 
 ## Stack Choice

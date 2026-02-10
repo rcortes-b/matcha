@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "me.rcortesb.grpc";
+option java_outer_classname = "SearchFilterProto";
+
+service SearchFilterService {
+	rpc getSearchFilter (SearchFilterRequest) returns (SearchFilterResponse);
+	rpc retrieveUsers (UserHitRequest) returns (UserHitResponse);
+}
+
+message SearchFilterRequest {
+  string userId = 1;
+}
+
+message UserHitRequest {
+	repeated string userId = 1;
+}
+
+message SearchFilterResponse {
+  string gender = 1;
+  string sexualPreference = 2;
+  double lat = 3;
+  double lon = 4;
+}
+
+message UserHitResponse {
+	repeated UserResponseGRPC users = 1;
+}
+
+message UserResponseGRPC {
+	string firstName = 1;
+	int32 age = 2;
+	string gender = 3;
+	string sexualPreference = 4;
+	string biography = 5;
+	string address = 6;
+	repeated string tags = 7;
+}
