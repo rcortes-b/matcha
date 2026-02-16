@@ -55,6 +55,30 @@ Spring Cloud, Apache Kafka, WebSockets, Redis, Jenkins, and Elasticsearch are al
 
 I chose a microservices architecture, not because it’s the most practical choice for this project (I know it’s overkill), but because I want to learn and gain hands-on experience with this common industry approach, which can be useful for building scalable apps.
 
+## Environment Variables Needed
+
+There are multiple .env files in this project to make it work. I'll specify the directory where each .env file should be with variables needed. The path is from the root of the project.
+
+infrastructure/utils/.env:
+- POSTGRES_USER
+- POSTGRES_PASSWORD
+
+backend/auth/.env:
+- JWT_SECRET_KEY (Used to sign and verify tokens in web authentication)
+- COOKIE_NAME (Name of the browser cookie that will be generated for authentication)
+- COOKIE_REFRESH_NAME (Name of the browser refresh-cookie that will be generated for authentication)
+- EMAIL_USERNAME (This is to send the email verification, depending email server will be one thing or another)
+- EMAIL_PASSWORD (same as EMAIL_USERNAME)
+- DB_USER (This has to be the same as the POSTGRES_USER of 'infrastructure/utils/.env')
+- DB_PASSWORD (This has to be the same as the POSTGRES_PASSWORD of 'infrastructure/utils/.env')
+
+backend/gateway/.env:
+- COOKIE_NAME (This is the same as the COOKIE_NAME from 'backend/auth/.env')
+- SECRET_HEADER (This can be a custom code/message/hash used to request validation/verification)
+
+backend/user/.env:
+- SECRET_HEADER (Same as 'backend/gateway/.env' and the following services)
+
 ## NOTE Nº2
 
 Project is currently in development, more documentation will be added such as:

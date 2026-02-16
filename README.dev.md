@@ -30,7 +30,9 @@ This is a compilation of things that i've not implemented yet but will be implem
 - Outbox Pattern for data resilience (Kafka Events)
 - Password change in the Auth Service
 - Profile Editing in the User Service
+- Add configuration to Gateway Router
 
+- Añadir en el browse service: Si ya ha habido like o block no mostrar el usuario
 
 ## Notes about things learnt
 
@@ -47,4 +49,22 @@ General idea - Problem to solve:
 Solution to the problem:
 - If Kafka is down, the user profile will never be created because the event won't be emitted
 - If the time elapsed between the auth_user creation and the event to emit, the app crashes (this is done in ms, but could happen), the user profile will never be created because the event won't be emitted
+
+## Development Notes
+
+### 13-02-2026
+
+#### This are the interactions that will be notified
+
+Note: The key of the kafka event will be the targetId to always have the same user in the same partition
+
+- LikeReceived by 'x'
+- ProfileViewed by 'x'
+- MessageReceived by 'x'
+- MatchEvent with 'x'
+• When a connected user “unlikes” them. (This is like a bonus - extra feature, because in a real app that won't be necessary)
+
+#### This are the interactions that won't be notified
+- UserBlock
+- UserReport
 

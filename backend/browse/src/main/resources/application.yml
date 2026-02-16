@@ -4,15 +4,16 @@ spring:
   application:
     name: browse
   elasticsearch:
-    uris: http://localhost:9200
+    #uris: http://localhost:9200
+    uris: matcha-elasticsearch-dev:9200
     #restclient:
     #  sniff:
     #    enabled: false
     #compatibility-headers:
     #  enabled: true
   kafka:
-    #bootstrap-servers: matcha-kafka-dev:9092
-    bootstrap-servers: localhost:9098
+    bootstrap-servers: matcha-kafka-dev:9092
+    #bootstrap-servers: localhost:9098
     consumer:
       group-id: browse-service
       auto-offset-reset: earliest
@@ -20,16 +21,16 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
-  datasource:
+  #datasource:
     #url: jdbc:postgresql://matcha-postgres-dev:5432/db_user
-    url: jdbc:postgresql://localhost:5433/db_user
-    username: ${DB_USER:matcha_user}
-    password: ${DB_PASSWORD:topsecretpassword}
+    #url: jdbc:postgresql://localhost:5433/db_user
+    #username: ${DB_USER:matcha_user}
+    #password: ${DB_PASSWORD:topsecretpassword}
 grpc:
   client:
     search-filter-service:
-      #address: "static://matcha-auth-service-dev:9091"
-      address: "static://localhost:9093"
+      address: "static://matcha-user-service-dev:9093"
+      #address: "static://localhost:9093"
       negotiationType: plaintext
 
 #logging:

@@ -44,6 +44,11 @@ docker stop matcha-user-service-dev
 docker rm matcha-user-service-dev
 docker image rm infrastructure-matcha-user-service-dev
 
+# --- Browse Service --- #
+docker stop matcha-browse-service-dev
+docker rm matcha-browse-service-dev
+docker image rm infrastructure-matcha-browse-service-dev
+
 #Volumes
 docker volume rm matcha-db-data-dev
 

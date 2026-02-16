@@ -59,6 +59,7 @@ public class SearchFilterService extends SearchFilterServiceGrpc.SearchFilterSer
 
 		for (User user : users) {
 			usersResponseDTO.add(UserResponseGRPC.newBuilder()
+									  .setUserId(user.getId().toString())
 									  .setFirstName(user.getFirstName())
 									  .setAge(user.getAge())
 									  .setGender(user.getGender().name())

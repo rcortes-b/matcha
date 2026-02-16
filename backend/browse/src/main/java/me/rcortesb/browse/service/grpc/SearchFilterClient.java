@@ -45,6 +45,7 @@ public class SearchFilterClient {
 		UserHitResponse response = stub.retrieveUsers(request);
 		return response.getUsersList().stream()
 									  .map(grpcResponse -> new UserResponseDTO(
+										   grpcResponse.getUserId(),
 										   grpcResponse.getFirstName(),
 										   grpcResponse.getAge(),
 										   grpcResponse.getGender(),

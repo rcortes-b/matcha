@@ -33,18 +33,6 @@ CREATE TABLE user_pictures (
     uploaded_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE location (
-    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_id UUID references profile_user(id),
-    city VARCHAR(50),
-    country VARCHAR(50),
-    latitude DOUBLE PRECISION,
-    longitude DOUBLE PRECISION,
-    postal_code VARCHAR(10)
-    --- state, provincia
-    --- full address, ...
-);
-
 CREATE TABLE tags (
     id SMALLINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     tag VARCHAR(20) UNIQUE NOT NULL

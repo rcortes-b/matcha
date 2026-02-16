@@ -65,8 +65,8 @@ public class GatewayConfig {
                         )
                         .uri("http://matcha-user-service-dev:8082")
                 )
-                .route(p -> p
-                        .path("/get", "/get/**")
+				.route(p -> p
+                        .path("/api/browse/**")
                         .filters(f -> f
                                 .circuitBreaker(config -> config
                                         .setName("defaultServiceCB")
@@ -76,7 +76,8 @@ public class GatewayConfig {
                                         .setKeyResolver(keyResolver))
                                 .filter(authFilter)
                         )
-                        .uri("http://httpbin.org:80"))
+                        .uri("http://matcha-browse-service-dev:8083")
+                )
                 .build();
     }
 

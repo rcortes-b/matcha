@@ -43,6 +43,19 @@ services:
       - matcha-gateway-service-dev
     env_file:
       - "../backend/user/.env"
+  matcha-browse-service-dev:
+    container_name: matcha-browse-service-dev
+    build:
+      context: ..
+      dockerfile: infrastructure/services/browse-service/Dockerfile
+    networks:
+      - "matcha-network-dev"
+    restart: always
+    ports:
+      - "8083:8083"
+    depends_on:
+      - matcha-gateway-service-dev
+      - matcha-user-service-dev
 
 networks:
   matcha-network-dev:

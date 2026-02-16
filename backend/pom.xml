@@ -19,6 +19,8 @@
     <module>gateway</module>
     <module>user</module>
 	<module>browse</module>
+	<module>interaction</module>
+	<module>notification</module>
   </modules>
 
 </project>
