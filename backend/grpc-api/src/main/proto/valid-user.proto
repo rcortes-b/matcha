@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "me.rcortesb.grpc";
+option java_outer_classname = "UserValidServiceProto";
+
+service UserValidService {
+  rpc isUserValid (UserValidRequest) returns (UserValidResponse);
+}
+
+message UserValidRequest {
+  string userId = 1;
+}
+
+message UserValidResponse {
+  bool isValid = 1;
+}

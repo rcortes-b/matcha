@@ -9,3 +9,16 @@ spring:
     username: ${DB_USER:matcha_user}
     password: ${DB_PASSWORD:topsecretpassword}
     driver-class-name: org.postgresql.Driver
+  kafka:
+    #bootstrap-servers: matcha-kafka-dev:9092
+    bootstrap-servers: localhost:9098
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+grpc:
+  client:
+    user-valid-service:
+      #address: "static://matcha-auth-service-dev:9091"
+      address: "static://localhost:9091"
+      negotiationType: plaintext
