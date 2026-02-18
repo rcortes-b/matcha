@@ -5,13 +5,22 @@ import java.util.Objects;
 import java.util.UUID;
 
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
 
+@Getter
 @Embeddable
 public class UserTargetId implements Serializable {
 	private UUID userId;
 	private UUID targetId;
 
 	public UserTargetId() {}
+
+	public UserTargetId(String userId, String targetId) {
+		if (userId == null || targetId == null)
+			return ;
+		this.userId = UUID.fromString(userId);
+		this.targetId = UUID.fromString(targetId);
+	}
 
 	public UserTargetId(UUID userId, UUID targetId) {
 		this.userId = userId;
@@ -43,5 +52,11 @@ public class UserTargetId implements Serializable {
 		} else if (!targetId.equals(other.targetId))
 			return false;
 		return true;
+	}
+
+	public void reverseIds() {
+		UUID tmp = this.targetId;
+		this.targetId = this.userId;
+		this.userId = tmp;
 	}
 }

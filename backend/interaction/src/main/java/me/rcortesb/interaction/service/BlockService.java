@@ -7,4 +7,5 @@ public interface BlockService {
 	void handleBlock(String userId, String targetId);
 	void handleReport(String userId, ReportDTO report);
 	boolean userIsBlocked(UserTargetId id);
+	boolean hasBlockRelation(UserTargetId id);
 }

@@ -31,8 +31,10 @@ This is a compilation of things that i've not implemented yet but will be implem
 - Password change in the Auth Service
 - Profile Editing in the User Service
 - Add configuration to Gateway Router
+- Add filter to each service
 
-- Añadir en el browse service: Si ya ha habido like o block no mostrar el usuario
+- To add in the 'browse-service': If a user has already been liked/blocked, do not show
+- Add '/unlike' and '/profile-view' endpoints and send events to the 'notification-service'
 
 ## Notes about things learnt
 
