@@ -1,21 +1,39 @@
 <!DOCTYPE html>
 <html>
-<body>
-  <h1>Register Form</h1>
-  <form id="registerForm">
-	<label for="register-email">Email:</label><br>
-    <input type="text" id="register-email" name="email"/><br>
-	<label for="register-fName">First Name:</label><br>
-    <input type="text" id="register-fName" name="firstName"/><br>
-	<label for="register-lName">Last Name:</label><br>
-    <input type="text" id="register-lName" name="lastName"/><br>
-	<label for="register-password">Password:</label><br>
-    <input type="text" id="register-password" name="password"/><br>
-	<label for="register-re-password">Re-type Password:</label><br>
-    <input type="text" id="register-re-password" name="re-password"/><br>
-    <button>Register</button>
-  </form>
-
-  <script src="/js/register.js"></script>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>Register</title>
+		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/auth.css">
+	</head>
+	<body>
+		<header>
+			<div id="navbar"></div>
+		</header>
+		<main>
+			<section class="auth-form">
+				<h1>Register</h1>
+				<form id="registerForm">
+					<label for="register-email">Email:</label><br>
+					<input type="text" id="register-email" name="email" placeholder="example@gmail.com"/><br>
+					<label for="register-fName">First Name:</label><br>
+					<input type="text" id="register-fName" name="firstName" placeholder="John"/><br>
+					<label for="register-lName">Last Name:</label><br>
+					<input type="text" id="register-lName" name="lastName" placeholder="Doe"/><br>
+					<label for="register-password">Password:</label><br>
+					<input type="text" id="register-password" name="password"/><br>
+					<label for="register-re-password">Re-type Password:</label><br>
+					<input type="text" id="register-re-password" name="re-password"/><br><br>
+					<button>Register</button>
+				</form>
+				<br>
+				<p>Do you already have an account? Login hgere</p>
+			</section>
+		</main>
+		<footer>
+			<div id="footer"></div>
+		</footer>
+		<script type="module" src="/js/components.js"></script>
+		<script type="module" src="/js/login.js"></script>
+	</body>
 </html>

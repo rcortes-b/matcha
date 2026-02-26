@@ -1,0 +1,50 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+main {
+	display: flex;
+	flex: 1;
+}
+
+.body-block {
+	display: grid;
+	flex: 1;
+	grid-template-columns: 1fr 1fr;
+}
+
+.description-block {
+	background-color: white;
+	padding: 30px;
+}
+
+.grid-block {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	list-style: none;
+	width: 100%;
+}
+
+/*.grid-block li {
+	width: 100%;
+	height: 100%;
+	border: 1px solid;
+	border-color: black;
+}*/
+
+.grid-block img {
+	width: 50px;
+}
+
+.paragraph-fbutton {
+	display: inline-block;
+	border: 5px solid;
+	border-radius: 40px;
+	border-color: #DFF5E1;
+	padding: 10px 20px;
+}

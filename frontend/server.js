@@ -5,7 +5,14 @@ const app = express();
 const __dirname = path.resolve();
 
 app.use(express.static("html"));
+app.use("/css", express.static("css"));
 app.use("/js", express.static("js"));
+app.use("/components", express.static("components"));
+app.use("/images", express.static("images"));
+
+app.get("/loader", (_, res) =>
+  res.sendFile(__dirname + "/components/loader.html")
+);
 
 app.get("/", (_, res) =>
   res.sendFile(__dirname + "/html/index.html")
