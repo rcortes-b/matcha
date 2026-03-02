@@ -1,17 +1,27 @@
+await window.componentsLoaded;
 
-function displayNavBar(validRequest) {
+async function displayNavBar() {
+	const loader = document.getElementById('loader');
+	// if localStorage user is logged just display y sino pues activar el loading
+	let navlinks;
+	if (true == true) {
+		loader.style.display = 'flex';
+		const res = await fetch("http://localhost:9090/api/auth/me", {
+			method: "POST"
+		});
 
-	const navBar = document.getElementById('navBar');
-	const loggedNavBar = document.getElementById('loggedNavBar');
-
-	if (validRequest) {
-		loggedNavBar.style.display = 'block';
-		navBar.style.display = 'none';
+		if (res.status == 200)
+			navlinks = document.getElementById('navlinks-auth');
+		else
+			navlinks = document.getElementById('navlinks');
+		if (navlinks)
+			navlinks.style.display = 'flex';
 	} else {
-		loggedNavBar.style.display = 'none';
-		navBar.style.display = 'block';
+		navlinks = document.getElementById('navlinks-auth');
+		if (navlinks)
+			navlinks.style.display = 'flex';
 	}
-
+	loader.style.display = 'none';
 }
 
 async function getNearestPicks() {
@@ -27,5 +37,8 @@ async function getNearestPicks() {
 	}
 }
 
-getNearestPicks();
 
+displayNavBar();
+//getNearestPicks();
+
+document.getElementById('browsing-button').onclick = () => window.location.href = "/browse";

@@ -1,17 +1,14 @@
-fetch("components/navbar.html")
-  .then(res => res.text())
-  .then(data => {
-    const navbar = document.getElementById("navbar");
-    if (navbar) {
-      navbar.innerHTML = data;
-    }
-  });
+async function loadComponent(id, file) {
+  const res = await fetch(file);
+  const data = await res.text();
 
-fetch("components/footer.html")
-	.then(res => res.text())
-	.then(data => {
-	const navbar = document.getElementById("footer");
-	if (navbar) {
-    	navbar.innerHTML = data;
-    }
-});
+  const element = document.getElementById(id);
+  if (element) element.innerHTML = data;
+}
+
+async function loadComponents() {
+  await loadComponent("navbar", "components/navbar.html");
+  await loadComponent("footer", "components/footer.html");
+}
+
+window.componentsLoaded = loadComponents();
