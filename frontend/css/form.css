@@ -21,11 +21,7 @@ main {
 	background-color: white;
 }
 
-.auth-form label {
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-weight: bold;
-}
-
 .auth-form p {
 	margin: 0;
 }
+

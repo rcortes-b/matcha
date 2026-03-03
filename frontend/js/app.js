@@ -24,21 +24,7 @@ async function displayNavBar() {
 	loader.style.display = 'none';
 }
 
-async function getNearestPicks() {
-	const res = await fetch("http://localhost:9090/api/browse&by=distance", {
-		method: "POST"
-	});
-	displayNavBar(res.ok); 
-	if (res.ok) {
 
-	} else {
-
-		console.log("Wrong input!");
-	}
-}
-
-
+//document.getElementById('browsing-button').onclick = () => window.location.href = "/browse";
 displayNavBar();
-//getNearestPicks();
 
-document.getElementById('browsing-button').onclick = () => window.location.href = "/browse";

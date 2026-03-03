@@ -7,9 +7,17 @@ body {
 	background-color: #F8F6F2;
 }
 
+h1 {
+	font-family: 'Poppins', sans-serif;
+}
+
 a {
 	text-decoration: none;
-	color: green;
+	color: #00674F;
+}
+
+p {
+	font-family: cursive;
 }
 
 /* HTML: <div class="loader"></div> */
@@ -127,4 +135,24 @@ a {
 
 .footer p {
 	color: white;
+}
+
+form button {
+	background-color: #D1E9D6;
+	border: 1px solid;
+	border-radius: 6px;
+	cursor: pointer;
+	font-family: cursive;
+}
+
+form input {
+	border-radius: 6px;
+}
+
+input::placeholder {
+	font-family: cursive;
+}
+
+form label {
+	font-family: cursive;
 }

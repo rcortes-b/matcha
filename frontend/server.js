@@ -30,6 +30,10 @@ app.get("/verify-user", (_, res) =>
   res.sendFile(__dirname + "/html/verify-user.html")
 );
 
+app.get("/reset-password", (_, res) =>
+  res.sendFile(__dirname + "/html/reset-password.html")
+);
+
 app.get("/complete-profile", (_, res) =>
   res.sendFile(__dirname + "/html/complete-profile.html")
 );
