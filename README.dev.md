@@ -23,7 +23,17 @@
 | Notification | - | - |
 | Message | - | - |
 
-## Implementation List
+## Implementation List - ToDo Now
+
+- Frontend
+	- Check if profile has been completed (complete-profile) to redirect directly to the home
+	- Check in /register if user has been registered. Same for login change-password and so on
+
+- Backend
+	- Return available data in the login to store in the localStorage 
+
+
+## Implementation List - Backend
 
 This is a compilation of things that i've not implemented yet but will be implemented once the program is fully working
 

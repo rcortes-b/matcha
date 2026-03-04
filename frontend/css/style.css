@@ -101,12 +101,53 @@ p {
 	font-family: sans-serif;
 }
 
+.navitem {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
 .navitem a{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	font-family: cursive;
+	font-size: 16px;
+}
+
+.navitem button {
+	border: none;
+	background-color: #F8F6F2;
+	color: #00674F;
+	cursor:pointer;
+	font-size: 16px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-family: cursive;
+}
+
+.profile-dropdown {
+	display: none;
+	top: 60px;
+	position: absolute;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-color: white;
+	color: black;
+	gap: 0.5rem;
+	border: 1px solid black;
+}
+
+.dropdown-item {
+	padding: 5px;
+	width: 100%;
+	height: auto;
+	border-top: 1px solid black;
 }
 
 .navicon {

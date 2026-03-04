@@ -1,3 +1,4 @@
+await window.componentsLoaded;
 
 function fillEmail() {
 	const urlParams = new URLSearchParams(window.location.search);

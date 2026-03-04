@@ -1,4 +1,6 @@
-console.log('register.js');
+await window.componentsLoaded;
+
+document.getElementById('navlinks').style.display = 'flex';
 
 document.getElementById("registerForm").onsubmit = async (e) => {
   e.preventDefault();
@@ -7,27 +9,27 @@ document.getElementById("registerForm").onsubmit = async (e) => {
   const reTypedPassword = form.elements.re-password.value;
 
   if (password.localeCompare(reTypedPassword) == -1) {
-	console.log("passwords doesn't match");
-  }
-
-  const formParams = Object.fromEntries(new FormData(e.target));
-  const body =	{
-					email: formParams.email,
-					firstName: formParams.firstName,
-					lastName: formParams.lastName,
-					password: formParams.password
-  				}
-  console.log(body);
-
-  const res = await fetch("http://localhost:9090/api/auth/register", {
-    method: "POST",
-	body: JSON.stringify(body),
-	credentials: "include",
-	headers: { "Content-Type": "application/json" }
-  });
-  if (res.ok) {
-    window.location.href = "/login";
+	alert('Passwords do not match');
   } else {
-	console.log('Response: ' + res);
+	  const formParams = Object.fromEntries(new FormData(e.target));
+	  const body =	{
+						email: formParams.email,
+						firstName: formParams.firstName,
+						lastName: formParams.lastName,
+						password: formParams.password
+					  }
+	  console.log(body);
+	
+	  const res = await fetch("http://localhost:9090/api/auth/register", {
+		method: "POST",
+		body: JSON.stringify(body),
+		credentials: "include",
+		headers: { "Content-Type": "application/json" }
+	  });
+	  if (res.ok) {
+		window.location.href = "/login";
+	  } else {
+		console.log('Response: ' + res);
+	  }
   }
 };

@@ -53,4 +53,3 @@ CREATE TABLE user_tags (
 );
 
 CREATE INDEX idx_user_pictures_user_id ON user_pictures(user_id);
-CREATE INDEX idx_location_user_id ON location(user_id);

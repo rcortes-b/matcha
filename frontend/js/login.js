@@ -1,3 +1,11 @@
+await window.componentsLoaded;
+
+if (localStorage.getItem('user-connected'))
+	window.location.href = '/';
+
+document.getElementById('navlinks').style.display = 'flex';
+
+
 document.getElementById("loginForm").onsubmit = async (e) => {
   e.preventDefault();
 
@@ -14,6 +22,7 @@ document.getElementById("loginForm").onsubmit = async (e) => {
   if (res.status == 401) {
 	window.location.href = "/verify-user?email=" + body.email;
   } else if (res.ok) {
-	window.location.href = "/complete-profile";
+		localStorage.setItem('user-connected', 'connected');
+		window.location.href = "/complete-profile";
   }
 };

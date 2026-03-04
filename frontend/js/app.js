@@ -4,7 +4,8 @@ async function displayNavBar() {
 	const loader = document.getElementById('loader');
 	// if localStorage user is logged just display y sino pues activar el loading
 	let navlinks;
-	if (true == true) {
+	if (localStorage.getItem('user-connected') == null) {
+		console.log('This is null');
 		loader.style.display = 'flex';
 		const res = await fetch("http://localhost:9090/api/auth/me", {
 			method: "POST"

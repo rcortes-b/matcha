@@ -26,6 +26,10 @@ app.get("/login", (_, res) =>
   res.sendFile(__dirname + "/html/login.html")
 );
 
+app.get("/logout", (_, res) =>
+  res.sendFile(__dirname + "/html/logout.html")
+);
+
 app.get("/verify-user", (_, res) =>
   res.sendFile(__dirname + "/html/verify-user.html")
 );

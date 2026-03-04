@@ -1,3 +1,5 @@
+await window.componentsLoaded;
+
 function getSelectedTags() {
   const checkedBoxes = document.querySelectorAll(
     'input[name="tags"]:checked'
@@ -21,21 +23,22 @@ document.getElementById('completeProfileForm').onsubmit = async (e) => {
 						birthDate: birthDate,
 						gender: gender,
 						sexualPreference: sexualPreference,
-						biography: biography
+						biography: biography,
+						tags: tags
 					};
 	console.log('Request will look like this:\n', body);
 	console.log('tags as list are:\n', tags);
 	
-	const res = await fetch("http://localhost:8082/api/users/complete-profile", {
+	const res = await fetch("http://localhost:9090/api/users/complete-profile", {
 		method: "POST",
 		credentials: 'include',
 		body: JSON.stringify(body),
 		headers: { "Content-Type": "application/json" }
 	});
-
 	if (res.ok) {
+		localStorage.setItem('user-connected', JSON.stringify(body));
 		window.location.href = "/";
 	} else {
-	
+		alert('Something went wrong with!');
 	}
 };
